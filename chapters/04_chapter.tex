@@ -1,0 +1,126 @@
+Basic data for development of economic-mathematical model of regression dependence of growth rates of profitability of start-ups of the analysed countries on VC, an index of innovative development and indicators of quality of innovative system are provided in Table \ref{tab:country_data}
+
+
+\begin{table}[!htbp]
+    \begin{center}
+    \begin{tabular}{lrrr}
+    \toprule
+    {} &     USA &  Canada &  Russia \\
+    \midrule
+    X0 &   1.000 &   1.000 &   1.000 \\
+    X1 &  59.400 &  66.600 &  61.400 \\
+    X2 &   0.199 &   0.222 &   0.210 \\
+    X3 &   0.194 &   0.194 &   0.151 \\
+    X4 &   0.148 &   0.166 &   0.148 \\
+    X5 &   0.066 &   0.083 &   0.083 \\
+    X6 &   0.044 &   0.044 &   0.051 \\
+    X7 &   0.087 &   0.108 &   0.108 \\
+    X8 &   0.109 &   0.136 &   0.136 \\
+    X9 &   0.026 &   0.027 &   0.027 \\
+    y  &   3.500 &   1.700 &   0.900 \\
+    \bottomrule
+    \end{tabular}
+    \caption{VC Data for Russia, USA and Canada \\ Source: \parencite{erawatch}}
+    \label{tab:country_data}
+    \end{center}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%     first OLS result %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Evaluating coefficients of regression is performed on the basis of OLS (Ordinary Least Squares), using StatsModels \footnote{\url{http://www.statsmodels.org/}} package for Python \footnote{\url{http://www.python.org/}}
+
+\vspace{0.1cm}
+
+\begin{table}[!htbp]
+    \begin{center}
+    \begin{tabular}{lclc}
+        \toprule
+        \textbf{Dep. Variable:}    &        y         & \textbf{  R-squared:         } &     1.000   \\
+        \textbf{Model:}            &       OLS        & \textbf{  Adj. R-squared:    } &       nan   \\
+        \textbf{Method:}           &  Least Squares   & \textbf{  F-statistic:       } &     0.000   \\
+        \textbf{Date:}             & Mon, 14 Nov 2016 & \textbf{  Prob (F-statistic):} &      nan    \\
+        \textbf{Time:}             &     12:08:49     & \textbf{  Log-Likelihood:    } &    83.469   \\
+        \textbf{No. Observations:} &           3      & \textbf{  AIC:               } &    -160.9   \\
+        \textbf{Df Residuals:}     &           0      & \textbf{  BIC:               } &    -163.6   \\
+        \textbf{Df Model:}         &           2      & \textbf{                     } &             \\
+        \bottomrule
+    \end{tabular}
+    
+    
+    
+    \begin{tabular}{lccccc}
+                & \textbf{coef} & \textbf{std err} & \textbf{t} & \textbf{P$>$$|$t$|$} & \textbf{[95.0\% Conf. Int.]}  \\
+        \textbf{X0} &       8.6385  &          inf     &         0  &           nan        &           nan       nan       \\
+        \textbf{X1} &      -0.1334  &          inf     &        -0  &           nan        &           nan       nan       \\
+        \textbf{X2} &      -3.3165  &          inf     &        -0  &           nan        &           nan       nan       \\
+        \textbf{X3} &      33.3440  &          inf     &         0  &           nan        &           nan       nan       \\
+        \textbf{X4} &       3.6777  &          inf     &         0  &           nan        &           nan       nan       \\
+        \textbf{X5} &      -9.6839  &          inf     &        -0  &           nan        &           nan       nan       \\
+        \textbf{X6} &      -4.7752  &          inf     &        -0  &           nan        &           nan       nan       \\
+        \textbf{X7} &     -11.9152  &          inf     &        -0  &           nan        &           nan       nan       \\
+        \textbf{X8} &     -15.3443  &          inf     &        -0  &           nan        &           nan       nan       \\
+        \textbf{X9} &      -0.3786  &          inf     &        -0  &           nan        &           nan       nan       \\
+
+        \end{tabular}
+        \begin{tabular}{lclc}
+        \textbf{Omnibus:}       &    nan & \textbf{  Durbin-Watson:     } &    0.169  \\
+        \textbf{Prob(Omnibus):} &    nan & \textbf{  Jarque-Bera (JB):  } &    0.306  \\
+        \textbf{Skew:}          &  0.222 & \textbf{  Prob(JB):          } &    0.858  \\
+        \textbf{Kurtosis:}      &  1.500 & \textbf{  Cond. No.          } & 2.65e+03  \\
+    \bottomrule
+    \end{tabular}
+    % \caption{OLS Regression Results}
+    \caption{OLS Regression Results\\Source: \ref{tab:country_data}, author's calculations}
+    \label{tab:ols_1}
+    \end{center}
+    \hspace*{-1.2cm}
+\end{table}
+
+Thus equation looks like this:
+\begin{equation} \label{eq:OLS_1_coeffs}
+\begin{split}
+    Y = & 8.64 -0.13*X_1 -3.32*X_2 +33.34*X_3 +3.68*X_4 \\
+    &-9.68*X_5 -4.78*X_6 -11.92*X_7 -15.34*X_8 -0.38*X_9
+\end{split}
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%   correlation table  %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Let's calculate correlation table for our parameters from
+\ref{tab:country_data}
+
+\begin{table}[!htbp]
+    \begin{tabular}{lrrrrrrrrrr}
+    \toprule
+    {} &    \textbf{X1} &    \textbf{X2} &    \textbf{X3} &    \textbf{X4} &    \textbf{X5} &    \textbf{X6} &    \textbf{X7} &    \textbf{X8} &    \textbf{X9} &     \textbf{y} \\
+    \midrule
+    \textbf{X1} &  1.00 &  0.97 &  0.25 &  0.96 &  0.71 & -0.25 &  0.71 &  0.71 &  0.71 & -0.47 \\
+    \textbf{X2} &  0.97 &  1.00 &  0.03 &  0.88 &  0.85 & -0.03 &  0.85 &  0.85 &  0.85 & -0.66 \\
+    \textbf{X3} &  0.25 &  0.03 &  1.00 &  0.50 & -0.50 & -1.00 & -0.50 & -0.50 & -0.50 &  0.74 \\
+    \textbf{X4} &  0.96 &  0.88 &  0.50 &  1.00 &  0.50 & -0.50 &  0.50 &  0.50 &  0.50 & -0.22 \\
+    \textbf{X5} &  0.71 &  0.85 & -0.50 &  0.50 &  1.00 &  0.50 &  1.00 &  1.00 &  1.00 & -0.95 \\
+    \textbf{X6} & -0.25 & -0.03 & -1.00 & -0.50 &  0.50 &  1.00 &  0.50 &  0.50 &  0.50 & -0.74 \\
+    \textbf{X7} &  0.71 &  0.85 & -0.50 &  0.50 &  1.00 &  0.50 &  1.00 &  1.00 &  1.00 & -0.95 \\
+    \textbf{X8} &  0.71 &  0.85 & -0.50 &  0.50 &  1.00 &  0.50 &  1.00 &  1.00 &  1.00 & -0.95 \\
+    \textbf{X9} &  0.71 &  0.85 & -0.50 &  0.50 &  1.00 &  0.50 &  1.00 &  1.00 &  1.00 & -0.95 \\
+    \textbf{y}  & -0.47 & -0.66 &  0.74 & -0.22 & -0.95 & -0.74 & -0.95 & -0.95 & -0.95 &  1.00 \\
+    \bottomrule
+    \end{tabular}
+    \caption{Correlation table for \ref{tab:country_data} \\ Source: Calculations of the author}
+    \label{tab:corr_full}
+\end{table}
+
+\textbf{There is a multicollinearity problem}
+
+\textbf{ToDo:}
+\begin{itemize}
+    \item calculate multicollinearity factors
+    \item fix multicollinearity
+    \item calculate OLS after fixing multicollinearity
+    \item identify significant parameters
+    \item calculate model significance ($R^2$)
+    \item Conclusions
+    \item Our hypothesis has been PROVEN/DISPROVEN
+\end{itemize}

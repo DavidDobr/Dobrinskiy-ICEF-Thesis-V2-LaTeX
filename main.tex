@@ -1,0 +1,132 @@
+%% ----------------------------------------------------------------
+%% main.tex -- MAIN FILE (the one that you compile with LaTeX)
+%% ---------------------------------------------------------------- 
+
+
+%% ----------------------------------------------------------------
+%% Preamble (Set up document, packages and style)
+%% ---------------------------------------------------------------- 
+
+% Set up the document
+\documentclass[12pt,twoside]{report}
+
+
+% Include any extra LaTeX packages required
+\usepackage{booktabs} % To thicken table lines
+
+\usepackage{amsmath}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+    \graphicspath{ {images/} }
+    
+\usepackage{hyperref}  % insert clickable links to PDF
+
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[a4paper, width=150mm, top=25mm, bottom=25mm, bindingoffset=6mm, headheight=150pt]{geometry}
+
+\usepackage{fancyhdr}
+    \pagestyle{fancy}
+    \fancyhead{}
+    \fancyhead[RO,LE]{\theme} % thesis title
+    \fancyfoot{}
+    \fancyfoot[LE,RO]{\thepage}
+    \fancyfoot[LO,CE]{Chapter \thechapter}
+    \fancyfoot[CO,RE]{\auth} % author
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    
+\usepackage[style=authoryear, sorting=none, backend = biber]{biblatex}
+    \addbibresource{references.bib}
+
+\renewcommand{\familydefault}{\rmdefault}  % use times new roman font family
+\renewcommand{\baselinestretch}{1.5}       % line spacing 1.5
+
+\usepackage{indentfirst}    % ADD indent at chapter beginning
+\usepackage{ragged2e}       % allows centering
+\usepackage{color}          % for colours  
+    \definecolor{codegreen}{rgb}{0,0.6,0}
+    \definecolor{codegray}{rgb}{0.5,0.5,0.5}
+    \definecolor{codepurple}{rgb}{0.58,0,0.82}
+    \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+% Create a list of custom shortcuts & macros
+\newcommand{\auth}{David Dobrinskiy}
+\newcommand{\theme}{How Venture Capital Affects Success of Startups}
+
+% Code Listing Options
+\usepackage{listings} %for code listing https://www.sharelatex.com/learn/Code_listing
+\usepackage{verbatim}
+
+\lstdefinestyle{mystyle}{
+    %backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+ 
+\lstset{style=mystyle}
+
+
+
+%% ----------------------------------------------------------------
+%% Body (Building the document)
+%% ---------------------------------------------------------------- 
+
+\title{\title}
+\author{\auth}
+\date{June 2016}
+
+\begin{document}
+
+\input{titlepage}  % create titlepage
+
+\tableofcontents   % create table of contents
+
+%% \listoffigures
+
+%% \listoftables
+
+\chapter*{Acknowledgements}
+    I would like to thank:
+    \begin{itemize}
+        \item ICEF staff for their incredible support and involvement during my years of study
+        \item Alexander Ivanov, a former Partner \& CFO at LifeSREDA VC, for introducing me to the exciting world of venture capital
+    \end{itemize}
+
+\chapter{Introduction}
+    \input{chapters/01_chapter}
+
+\chapter{Economic Impact of VC}
+    \input{chapters/02_chapter}
+
+\chapter{Methodology}
+    \input{chapters/03_chapter}
+
+\chapter{Results and Analysis}
+    \input{chapters/04_chapter}
+
+\chapter{Conclusion}
+    \input{chapters/conclusion}
+
+\appendix %apendix A
+    \chapter{Code Listings}
+    \input{chapters/code_listings}
+
+
+\printbibliography
+
+\end{document}
