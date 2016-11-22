@@ -1,28 +1,90 @@
-Basic data for development of economic-mathematical model of regression dependence of growth rates of profitability of start-ups of the analysed countries on VC, an index of innovative development and indicators of quality of innovative system are provided in Table \ref{tab:country_data}
+The author looks at 5 years of VC \& IPO data (2011-2015) to investigate relationships b/w firm's IPO success and venture capital raised.
+
+Dataset containing 70 'unicorns' (firms who's valuation exceeds 1B USD) was collected by Founder Collective\footnote{\url{http://www.foundercollective.com/}} VC fund, calculations by author.
+
+See variables' description in Table \ref{tab:descr}
+
+Facebook was excluded as an exceptinally extreme outlier.
+
+\begin{table}[bp!]
+    \centering
+    \caption{Dataset variables description}
+    \label{tab:descr}
+    \begin{tabular}{ll}
+    \textbf{Column}     & \textbf{Description}                                                   \\ \hline
+    Founded             & Year the firm was founded                                              \\
+    Ticker              & Firm's post-IPO stock exchange ticker                                  \\
+    IPO Share Price     & Initial IPO Share Price                                                \\
+    Current Share Price & Firm's share price as of Nov 22, 2016                                  \\
+    Current Market Cap  & Firm's Market Cap. as of Nov 22, 2016                                  \\
+    IPO Year            & Year the firm went public                                              \\
+    IPO Raised          & Amount raised during the IPO (\$ mln)                                  \\
+    Sector              & B2B vs B2C                                                             \\
+    Geo                 & Area (State for US, City for Non-US)                                   \\
+    Firm age            & Firm's age as of Nov 22, 2016                                          \\
+    Years to IPO        & Years passing between firm's inception and IPO                         \\
+    VC                  & Amount raised during all VC rounds (in nominal values, \$ mln)         \\
+    VC and IPO          & VC Raised + IPO Raised (\$ mln)                                        \\
+    \$ Price change     & Share price change from IPO to current day, as of Nov 22, 2016, in USD \\
+    \% Price change     & Share price change from IPO to current day, as of Nov 22, 2016, in \%  \\
+    Mult                & Multiplicator: Current Market Cap / VC Raised                         
+    \end{tabular}
+\end{table}
 
 
-\begin{table}[!htbp]
-    \begin{center}
-    \begin{tabular}{lrrr}
+Looking at a simple bar chart plotting every single investment, we can notice that it resembles normal distribution: long tails at upper & lower values, with vast majority of observations in the middle.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[scale=0.9]{vc_raised}
+    \caption{ \textbf{Most funded IPOs}\\Source: Founder Collective, graph by author}
+    % \label{fig:vc_raised}
+\end{figure}
+
+
+
+Table \ref{tab:b2b_b2c} compares b2b vs b2c.
+
+Curiously, while an average B2B startup has significantly less funding (56\% less) than a B2C one, it's average valuation is only 15\% lower.
+
+This is most probably due to the fact that startups in B2C field face stiffer competition, have to attract new users, and may not have a robust monetization model for a long time.
+
+At the same time, B2B due to it's business-oriented nature often starts generating cash at early stages.
+
+
+\begin{table}[bp!]
+    \centering
+    \begin{tabular}{lcc}
+        \toprule
+         &      VC & Current Market Cap \\
+        \midrule
+        B2C Total   &  \$6,053 &            \$96,775 \\
+        B2B Total   &  \$3,550 &           \$111,356 \\
+        B2C Average &    \$201 &             \$3,225 \\
+        B2B Average &     \$88 &             \$2,783 \\
+        \bottomrule
+    \end{tabular}
+    \caption{B2B vs B2C Comparison, author's calculations from dataset}
+    \label{tab:b2b_b2c}
+\end{table}
+
+
+Now let's compare 20 most vs 20 least funded startups: the less funded ones, according to Multiplicator, are on average 5 times more efficient.
+
+It's an interesting finding, since some would expect a contrary result, where more money creates more business opportunities and higher efficiencies. Apparently, it is not the case, and the investors should beware of over-pumping the startup with easy money.
+
+The challenge is to find a funding balance which will cover all necessary business and R\&D costs while keeping the team 'hungry' and 'nimble'.
+
+\begin{table}
+    \centering
+    \begin{tabular}{lccc}
     \toprule
-    {} &     USA &  Canada &  Russia \\
+    {} &      VC &  Current Market Cap &   Mult \\
     \midrule
-    X0 &   1.000 &   1.000 &   1.000 \\
-    X1 &  59.400 &  66.600 &  61.400 \\
-    X2 &   0.199 &   0.222 &   0.210 \\
-    X3 &   0.194 &   0.194 &   0.151 \\
-    X4 &   0.148 &   0.166 &   0.148 \\
-    X5 &   0.066 &   0.083 &   0.083 \\
-    X6 &   0.044 &   0.044 &   0.051 \\
-    X7 &   0.087 &   0.108 &   0.108 \\
-    X8 &   0.109 &   0.136 &   0.136 \\
-    X9 &   0.026 &   0.027 &   0.027 \\
-    y  &   3.500 &   1.700 &   0.900 \\
+    most\_20  &  332.69 &             3182.94 &  12.96 \\
+    least\_20 &   44.91 &             2183.98 &  63.04 \\
     \bottomrule
     \end{tabular}
-    \caption{VC Data for Russia, USA and Canada \\ Source: \parencite{erawatch}}
-    \label{tab:country_data}
-    \end{center}
 \end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -32,95 +94,44 @@ Evaluating coefficients of regression is performed on the basis of OLS (Ordinary
 
 \vspace{0.1cm}
 
-\begin{table}[!htbp]
-    \begin{center}
+\begin{center}
     \begin{tabular}{lclc}
-        \toprule
-        \textbf{Dep. Variable:}    &        y         & \textbf{  R-squared:         } &     1.000   \\
-        \textbf{Model:}            &       OLS        & \textbf{  Adj. R-squared:    } &       nan   \\
-        \textbf{Method:}           &  Least Squares   & \textbf{  F-statistic:       } &     0.000   \\
-        \textbf{Date:}             & Mon, 14 Nov 2016 & \textbf{  Prob (F-statistic):} &      nan    \\
-        \textbf{Time:}             &     12:08:49     & \textbf{  Log-Likelihood:    } &    83.469   \\
-        \textbf{No. Observations:} &           3      & \textbf{  AIC:               } &    -160.9   \\
-        \textbf{Df Residuals:}     &           0      & \textbf{  BIC:               } &    -163.6   \\
-        \textbf{Df Model:}         &           2      & \textbf{                     } &             \\
-        \bottomrule
-    \end{tabular}
-    
-    
-    
-    \begin{tabular}{lccccc}
-                & \textbf{coef} & \textbf{std err} & \textbf{t} & \textbf{P$>$$|$t$|$} & \textbf{[95.0\% Conf. Int.]}  \\
-        \textbf{X0} &       8.6385  &          inf     &         0  &           nan        &           nan       nan       \\
-        \textbf{X1} &      -0.1334  &          inf     &        -0  &           nan        &           nan       nan       \\
-        \textbf{X2} &      -3.3165  &          inf     &        -0  &           nan        &           nan       nan       \\
-        \textbf{X3} &      33.3440  &          inf     &         0  &           nan        &           nan       nan       \\
-        \textbf{X4} &       3.6777  &          inf     &         0  &           nan        &           nan       nan       \\
-        \textbf{X5} &      -9.6839  &          inf     &        -0  &           nan        &           nan       nan       \\
-        \textbf{X6} &      -4.7752  &          inf     &        -0  &           nan        &           nan       nan       \\
-        \textbf{X7} &     -11.9152  &          inf     &        -0  &           nan        &           nan       nan       \\
-        \textbf{X8} &     -15.3443  &          inf     &        -0  &           nan        &           nan       nan       \\
-        \textbf{X9} &      -0.3786  &          inf     &        -0  &           nan        &           nan       nan       \\
-
-        \end{tabular}
-        \begin{tabular}{lclc}
-        \textbf{Omnibus:}       &    nan & \textbf{  Durbin-Watson:     } &    0.169  \\
-        \textbf{Prob(Omnibus):} &    nan & \textbf{  Jarque-Bera (JB):  } &    0.306  \\
-        \textbf{Skew:}          &  0.222 & \textbf{  Prob(JB):          } &    0.858  \\
-        \textbf{Kurtosis:}      &  1.500 & \textbf{  Cond. No.          } & 2.65e+03  \\
-    \bottomrule
-    \end{tabular}
-    % \caption{OLS Regression Results}
-    \caption{OLS Regression Results\\Source: \ref{tab:country_data}, author's calculations}
-    \label{tab:ols_1}
-    \end{center}
-    \hspace*{-1.2cm}
-\end{table}
-
-Thus equation looks like this:
-\begin{equation} \label{eq:OLS_1_coeffs}
-\begin{split}
-    Y = & 8.64 -0.13*X_1 -3.32*X_2 +33.34*X_3 +3.68*X_4 \\
-    &-9.68*X_5 -4.78*X_6 -11.92*X_7 -15.34*X_8 -0.38*X_9
-\end{split}
-\end{equation}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%   correlation table  %%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Let's calculate correlation table for our parameters from
-\ref{tab:country_data}
-
-\begin{table}[!htbp]
-    \begin{tabular}{lrrrrrrrrrr}
     \toprule
-    {} &    \textbf{X1} &    \textbf{X2} &    \textbf{X3} &    \textbf{X4} &    \textbf{X5} &    \textbf{X6} &    \textbf{X7} &    \textbf{X8} &    \textbf{X9} &     \textbf{y} \\
-    \midrule
-    \textbf{X1} &  1.00 &  0.97 &  0.25 &  0.96 &  0.71 & -0.25 &  0.71 &  0.71 &  0.71 & -0.47 \\
-    \textbf{X2} &  0.97 &  1.00 &  0.03 &  0.88 &  0.85 & -0.03 &  0.85 &  0.85 &  0.85 & -0.66 \\
-    \textbf{X3} &  0.25 &  0.03 &  1.00 &  0.50 & -0.50 & -1.00 & -0.50 & -0.50 & -0.50 &  0.74 \\
-    \textbf{X4} &  0.96 &  0.88 &  0.50 &  1.00 &  0.50 & -0.50 &  0.50 &  0.50 &  0.50 & -0.22 \\
-    \textbf{X5} &  0.71 &  0.85 & -0.50 &  0.50 &  1.00 &  0.50 &  1.00 &  1.00 &  1.00 & -0.95 \\
-    \textbf{X6} & -0.25 & -0.03 & -1.00 & -0.50 &  0.50 &  1.00 &  0.50 &  0.50 &  0.50 & -0.74 \\
-    \textbf{X7} &  0.71 &  0.85 & -0.50 &  0.50 &  1.00 &  0.50 &  1.00 &  1.00 &  1.00 & -0.95 \\
-    \textbf{X8} &  0.71 &  0.85 & -0.50 &  0.50 &  1.00 &  0.50 &  1.00 &  1.00 &  1.00 & -0.95 \\
-    \textbf{X9} &  0.71 &  0.85 & -0.50 &  0.50 &  1.00 &  0.50 &  1.00 &  1.00 &  1.00 & -0.95 \\
-    \textbf{y}  & -0.47 & -0.66 &  0.74 & -0.22 & -0.95 & -0.74 & -0.95 & -0.95 & -0.95 &  1.00 \\
+    \textbf{Dep. Variable:}    &      Growth      & \textbf{  R-squared:         } &     0.137   \\
+    \textbf{Model:}            &       OLS        & \textbf{  Adj. R-squared:    } &     0.084   \\
+    \textbf{Method:}           &  Least Squares   & \textbf{  F-statistic:       } &     2.577   \\
+    \textbf{Date:}             & Tue, 21 Nov 2016 & \textbf{  Prob (F-statistic):} &   0.0456    \\
+    \textbf{Time:}             &     10:39:48     & \textbf{  Log-Likelihood:    } &   -103.41   \\
+    \textbf{No. Observations:} &          70      & \textbf{  AIC:               } &     216.8   \\
+    \textbf{Df Residuals:}     &          65      & \textbf{  BIC:               } &     228.1   \\
+    \textbf{Df Model:}         &           4      & \textbf{                     } &             \\
     \bottomrule
     \end{tabular}
-    \caption{Correlation table for \ref{tab:country_data} \\ Source: Calculations of the author}
-    \label{tab:corr_full}
-\end{table}
+    \begin{tabular}{lccccc}
+                              & \textbf{coef} & \textbf{std err} & \textbf{t} & \textbf{P$>$$|$t$|$} & \textbf{[95.0\% Conf. Int.]}  \\
+    \midrule
+    \textbf{Intercept}        &       0.4750  &        0.725     &     0.655  &         0.515        &        -0.974     1.924       \\
+    \textbf{C(Sector)[T.B2C]} &      -0.3221  &        0.284     &    -1.132  &         0.262        &        -0.890     0.246       \\
+    \textbf{VC}               &      -0.0015  &        0.001     &    -2.124  &         0.037        &        -0.003 -9.22e-05       \\
+    \textbf{Age}              &       0.2197  &        0.109     &     2.022  &         0.047        &         0.003     0.437       \\
+    \textbf{yearsIPO}         &      -0.2489  &        0.109     &    -2.283  &         0.026        &        -0.467    -0.031       \\
+    \bottomrule
+    \end{tabular}
+    \begin{tabular}{lclc}
+    \textbf{Omnibus:}       &  4.643 & \textbf{  Durbin-Watson:     } &    2.150  \\
+    \textbf{Prob(Omnibus):} &  0.098 & \textbf{  Jarque-Bera (JB):  } &    4.076  \\
+    \textbf{Skew:}          &  0.586 & \textbf{  Prob(JB):          } &    0.130  \\
+    \textbf{Kurtosis:}      &  3.152 & \textbf{  Cond. No.          } & 1.34e+03  \\
+    \bottomrule
+    \end{tabular}
+    %\caption{OLS Regression Results}
+\end{center}
 
-\textbf{There is a multicollinearity problem}
 
-\textbf{ToDo:}
-\begin{itemize}
-    \item calculate multicollinearity factors
-    \item fix multicollinearity
-    \item calculate OLS after fixing multicollinearity
-    \item identify significant parameters
-    \item calculate model significance ($R^2$)
-    \item Conclusions
-    \item Our hypothesis has been PROVEN/DISPROVEN
-\end{itemize}
+The OLS model \ref{eq:OLS_hat} has $Prob(F-statistic) < 0.05$, so at $\alpha = 5\%$ it is statistically significant as a whole.
+
+Interestingly, $VC$ is significant has coeff of $-0.0015$. It is counter-intuitive that increasing investment in a firm can have negative effect on it's rate of share growth.
+
+One possible explanation is that during an IPO.  well-funded successfull firms are priced more optimistically than their less inflated counterparts. Then over the years firms with lower initial valuation find it easier to grow in value faster.
+
+While $Age$ and $yearsIPO$ are obviously correlated , removing one or the other degrades the model's accuracy to the point where it becomes invalid at $\alpha = 5\%$.

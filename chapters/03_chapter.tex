@@ -1,4 +1,4 @@
-Within the research it is offered to construct the economic-mathematical model determining regression dependence of VC on performance indicators of startups.
+Within the research it is offered to construct the economic-mathematical model determining regression dependence of VC-backed firms' IPO Perfomance (initial VS current valuation) on various investment-related factors, such as raised capital, age, time to IPO, and others.
 
 For this purpose we use the function determining linear dependence of efficiency of startups (growth rate of profitability of startups) on VC, an index of innovative development and indicators of quality of innovation infrastructure:
 
@@ -8,39 +8,28 @@ Y = \beta_0 + \beta_{1}X_{1}+...+\beta_{m}X_{m} + \varepsilon
 
 where:
 
-$X_m$ are independent variables (VC, indexes of innovative development and indicators of quality of innovative system);
+$X_m$ are independent variables (VC, Age, years to IPO, Sector);
 
 $\beta$ - parameters which are subject to definition; 
 
 $\varepsilon$ – random error;
 
-$Y$ - dependent variable (growth rate of profitability of start-ups in 2015, \%);
+$Y$ - dependent variable (growth rate of share price, \%);
 
-$\beta_0$ - free member determining value of growth rates of profitability of start-ups in case when VC, the index of innovative development and an integrated quality evaluation of start-ups are equal to 0.
 
-The main criteria exerting impact on growth rate of profitability of start-ups, used within the research, are the following:
+%% CHANGE ... TO ACTIALS
+$\beta_0$ - free member determining value of growth rate all else is equal to 0.
 
-\begin{tabular}{ll}
-    \toprule
-    {} &                                           Criteria \\
-    \midrule
-    y  &  Observed growth rate of profitability of start-ups in 2015, \% \\
-    X0 &  Constant\\
-    X1 &        Index of innovative development for 2015, \% \\
-    X2 &     State participation in activities of start-ups \\
-    X3 &                    Development of basic researches \\
-    X4 &  Development of objects of innovative infrastructure \\
-    X5 &        Support of innovative business of start-ups \\
-    X6 &  Tax, credit, budget incentives of innovative activities of startups \\
-    X7 &        Development of venture capital of start-ups \\
-    X8 &  Legal support of innovative activities of startups \\
-    X9 &           Integration into world innovative system \\
-    \bottomrule
-\end{tabular}
+In practice, the estimated formula will be:
 
-\vspace{0.5cm}
-Within the research the analysis of dependence of startups on VC for such countries as the USA, Canada and Russia will be carried out.
-
-USA and Canada were chosen as mature markets with data available.
-
-Russia is included because of relevance as researcher's country of employment \& residence.
+\begin{equation} \label{eq:OLS_hat}
+    Growth = VC + Age + yearsIPO + C(Sector) + \varepsilon
+\end{equation}
+where:
+\begin{itemize}
+    \item Growth = '\% Price change', how share value has changed since the IPO
+    \item Age = 'Age', how many year ago the firm was founded
+    \item yearsIPO = 'Years to IPO', how many years passed from founding the firm to going public
+    \item Sector = 'Sector', B2B or B2C category
+    \item VC = 'VC', raised venture capital, in \$ mill.
+\end{itemize}
